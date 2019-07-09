@@ -1,0 +1,52 @@
+{
+    "rides": [
+      {
+        "rideNo": 23,
+        "rider": 34,
+        "rideStatus": 0,
+        "originalFare": "",
+        "fromArea": "",
+        "toArea": "",
+        "driver": null,
+        "requestTime": null,
+        "pickupTime": null,
+        "dropiffTime": null
+      },
+      {
+        "rideNo": 5,
+        "rider": 34,
+        "rideStatus": 0,
+        "originalFare": "",
+        "fromArea": "",
+        "toArea": "",
+        "driver": null,
+        "requestTime": null,
+        "pickupTime": null,
+        "dropiffTime": null
+      },
+      {
+        "rideNo": 3,
+        "rider": 34,
+        "rideStatus": 0,
+        "originalFare": "",
+        "fromArea": "",
+        "toArea": "",
+        "driver": null,
+        "requestTime": null,
+        "pickupTime": null,
+        "dropiffTime": null
+      },
+      {
+        "rideNo": 2,
+        "rider": 34,
+        "rideStatus": 0,
+        "originalFare": "",
+        "fromArea": "",
+        "toArea": "",
+        "driver": null,
+        "requestTime": null,
+        "pickupTime": null,
+        "dropiffTime": null
+      }
+    ]
+  }
