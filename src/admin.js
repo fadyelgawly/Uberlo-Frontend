@@ -12,24 +12,50 @@ export  class admin extends Component {
      
   
     state={
-        user: {}
-    };
     
+    };
+
+
     componentDidMount(){
 
-        const url ="https://d6bbf1bc-5485-436d-a106-f4e56cdeeb61.mock.pstmn.io/test";
-        fetch(url,{
-            method: "GET"
-        }).then(response=>response.json()).then(posts=>{
-            this.setState({posts:posts})
+        //const url ="http://uberlo.herokuapp.com/user";
+        const token = JSON.parse(localStorage.getItem("jwt"));
+
+        axios.get('http://localhost:4000/admin/users', {
+            headers: {
+                Authorization: 'JWT ' + token
+              }
         })
-        const url2 ="https://d6bbf1bc-5485-436d-a106-f4e56cdeeb61.mock.pstmn.io/test2";
-        fetch(url2,{
-            method: "GET"
-        }).then(response=>response.json()).then(tests=>{
-            this.setState({tests:tests})
+        .then((response) => {
+            console.log(response.data.users);
+            let users = response.data.users;
+            this.setState({
+                users
+            });
+            console.log(this.state);
+
+           // console.log("users: "  + this.state.users[0]);
         })
-}
+        .catch(function (error) {
+            console.log(error);
+        });   
+    }
+    
+//     componentDidMount(){
+
+//         const url ="https://d6bbf1bc-5485-436d-a106-f4e56cdeeb61.mock.pstmn.io/test";
+//         fetch(url,{
+//             method: "GET"
+//         }).then(response=>response.json()).then(posts=>{
+//             this.setState({posts:posts})
+//         })
+//         const url2 ="https://d6bbf1bc-5485-436d-a106-f4e56cdeeb61.mock.pstmn.io/test2";
+//         fetch(url2,{
+//             method: "GET"
+//         }).then(response=>response.json()).then(tests=>{
+//             this.setState({tests:tests})
+//         })
+// }
 
 
     
@@ -37,17 +63,17 @@ export  class admin extends Component {
     render() {
     const test= [{
     Header:"First Name",
-        accessor:"Fname",
+        accessor:"firstname",
         sortable:true
     },
     {
         Header:"Last Name",
-        accessor:"Lname",
+        accessor:"lastname",
         sortable:true
     },
     {
         Header:"Phone",
-        accessor:"Phone"
+        accessor:"phone"
     },
     {
         Header:"Actions",
@@ -62,7 +88,7 @@ export  class admin extends Component {
             filterable:false,
             sortable:false,
             id: "checkbox",
-            accessor: "",
+            accessor: "isDriver",
             Cell: ({ original }) => {
                 return (
                     <input
@@ -74,11 +100,12 @@ export  class admin extends Component {
             }
             
         },
-        {   Header: "Admin",
+        {   
+            Header: "Admin",
             filterable:false,
             sortable:false,
             id: "checkbox",
-            accessor: "",
+            accessor: "isAdmin",
             Cell: ({ original }) => {
                 return (
                     <input
@@ -91,44 +118,18 @@ export  class admin extends Component {
             
         }]
                
-    const columns= [{
-    Header:"Code",
-        accessor:"code",
-        sortable:true
-    },
-    {
-        Header:"Value",
-        accessor:"value",
-        sortable:true
-    },
-    {
-        Header:"Expiration Date",
-        accessor:"expireDate"
-    
-        }
-    
+  
 
-    ]
-
-       return(<Container component="main" maxWidth="xl">
-           <ReactTable
-           minRow={1}
-           filterable
-           sortable
-            columns={test}
-        data={this.state.posts}
-        
-           ></ReactTable>
-           <ReactTable
-           minRow={1}
-           filterable
-            columns={columns}
-        data={this.state.tests}
-        
-           ></ReactTable>
-
-</Container>
-       );
-}
+        return(
+        <Container component="main" maxWidth="xl">
+            <ReactTable
+                minRow={1}
+                filterable
+                sortable
+                columns={test}
+                data={this.state.users}>
+            </ReactTable>
+        </Container> );
+    }   
 
 }
