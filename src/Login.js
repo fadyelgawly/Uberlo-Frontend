@@ -24,8 +24,8 @@ export class Login extends Component{
 
         let self = this
 
-        //axios.get('https://uberlo.herokuapp.com/', {
-        axios.post('http://localhost:4000/login', {
+        axios.post('https://uberlo.herokuapp.com/login', {
+        //axios.post('http://localhost:4000/login', {
             ...this.state
         })
         .then(function (response) {

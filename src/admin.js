@@ -21,7 +21,7 @@ export  class admin extends Component {
         //const url ="http://uberlo.herokuapp.com/user";
         const token = JSON.parse(localStorage.getItem("jwt"));
 
-        axios.get('http://localhost:4000/admin/users', {
+        axios.get('http://uberlo.herokuapp.com/admin/users', {
             headers: {
                 Authorization: 'JWT ' + token
               }

@@ -16,11 +16,9 @@ export class accountInfo extends Component {
    
 
     componentDidMount(){
-
-        //const url ="http://uberlo.herokuapp.com/user";
+        
         const token = JSON.parse(localStorage.getItem("jwt"));
-
-        axios.get('http://localhost:4000/user', {
+        axios.get('http://uberlo.herokuapp.com/user', {
             headers: {
                 Authorization: 'JWT ' + token
               }
