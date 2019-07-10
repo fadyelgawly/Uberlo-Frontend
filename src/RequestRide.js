@@ -20,48 +20,14 @@ export class RequestRide extends Component {
         }
 
     };
-   
 
-    onSubmit = () => {
-
-        let self = this;
-        const token = JSON.parse(localStorage.getItem("jwt"));
-        console.log(token);
-        console.log(this.state);
-
-        if(this.state.request.fromArea && this.state.request.toArea){
-
-            axios.post('http://uberlo.herokuapp.com/requestride', {
-                headers: {
-                    Authorization: 'JWT ' + token
-                },
-                data: {
-                    ...this.state.request
-                }
-            })
-            .then((response) => {
-                    console.log(response);
-                    this.setState({
-                        user: response.data.user
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        } else {
-
-        }
-
-
-    };
-
-    
     componentDidMount(){
         
         const token = JSON.parse(localStorage.getItem("jwt"));
-        axios.post('http://uberlo.herokuapp.com/user', {
+        console.log(token);
+        axios.get('http://uberlo.herokuapp.com/user', {
             headers: {
-                Authorization: 'JWT ' + token
+                Authorization: `JWT ${token}`
               }
         })
         .then((response) => {
@@ -73,7 +39,42 @@ export class RequestRide extends Component {
         .catch(function (error) {
             console.log(error);
         });   
-    }
+    };
+
+    onSubmit = () => {
+
+        let self = this;
+        const token = JSON.parse(localStorage.getItem("jwt"));
+        console.log(token);
+        console.log(this.state);
+
+        if(this.state.request.fromArea && this.state.request.toArea){
+
+            axios.post('http://uberlo.herokuapp.com/requestride', {
+                    ...this.state.request
+            },{
+                headers: {
+                    Authorization: `JWT ${token}`
+                }
+            })
+            .then((response) => {
+                    console.log(response);
+      
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        } else {
+
+            //Nofity user to choose locations
+
+        }
+
+
+    };
+
+    
+
 
 
     render() {
@@ -92,7 +93,6 @@ export class RequestRide extends Component {
                                         fromArea: e
                                     }
                                 });
-                                console.log(this.state);
                             }}>
                             <Dropdown.Toggle variant="success" id="dropdown-basic" >
                                 From
@@ -110,7 +110,6 @@ export class RequestRide extends Component {
                                         toArea: e
                                     }
                                 });
-                                console.log(this.state);
                             }}>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 To
