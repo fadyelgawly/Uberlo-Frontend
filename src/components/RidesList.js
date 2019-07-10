@@ -8,7 +8,7 @@ import '../global'
 
 
 
-export class UsersList extends React.Component {
+export class RidesList extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -22,7 +22,7 @@ export class UsersList extends React.Component {
 
     const token = JSON.parse(localStorage.getItem("jwt"));
 
-    axios.get(global.baseURL + '/admin/users', {
+    axios.get(global.baseURL + '/admin/rides', {
       headers: {
         Authorization: 'JWT ' + token
       }
@@ -42,18 +42,22 @@ export class UsersList extends React.Component {
  
   render() {
     const test = [{
-        Header: "First Name",
-        accessor: "firstname",
+        Header: "Rider",
+        accessor: "rider",
         sortable: true
     },
     {
-        Header: "Last Name",
-        accessor: "lastname",
+        Header: "Driver",
+        accessor: "driver",
         sortable: true
     },
     {
-        Header: "Phone",
-        accessor: "phone"
+        Header: "Pickup location",
+        accessor: "fromArea"
+    },
+    {
+        Header: "Dropoff location",
+        accessor: "toArea"
     },
     {
         Header: "Actions",

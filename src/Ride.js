@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import { Redirect } from 'react-router'
 import SignUp from './components/Form';
+import './global'
 
 
 
@@ -23,7 +24,7 @@ export class Ride extends Component{
     onSubmit = () => {
         console.log('Submitting');
         const self = this;
-        fetch('http://localhost:4000/user/signup', {
+        fetch(global.baseURL + '/user/signup', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

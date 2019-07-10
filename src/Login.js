@@ -2,6 +2,7 @@ import React , { Component } from 'react';
 import { Redirect } from 'react-router'
 import LoginForm from './components/LoginForm';
 import axios from 'axios';
+import './global';
 
 
 
@@ -24,8 +25,9 @@ export class Login extends Component{
 
         let self = this
 
-        axios.post('https://uberlo.herokuapp.com/login', {
-        //axios.post('http://localhost:4000/login', {
+        console.log('Submitting');
+
+        axios.post(global.baseURL + '/login', {
             ...this.state
         })
         .then(function (response) {

@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import './global'
 
 export class RequestRide extends Component {
 
@@ -27,7 +28,7 @@ export class RequestRide extends Component {
         
         const token = JSON.parse(localStorage.getItem("jwt"));
         console.log(token);
-        axios.get('http://uberlo.herokuapp.com/user', {
+        axios.get(global.baseURL + '/user', {
             headers: {
                 Authorization: `JWT ${token}`
               }
@@ -51,7 +52,7 @@ export class RequestRide extends Component {
 
         if(this.state.request.fromArea && this.state.request.toArea){
 
-            axios.post('http://uberlo.herokuapp.com/requestride', {
+            axios.post(global.baseURL + '/requestride', {
                     ...this.state.request
             },{
                 headers: {

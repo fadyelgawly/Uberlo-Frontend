@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import "react-table/react-table.css"
 import axios from 'axios';
+import './global'
 
 export class accountInfo extends Component {
 
@@ -14,7 +15,7 @@ export class accountInfo extends Component {
     componentDidMount(){
         
         const token = JSON.parse(localStorage.getItem("jwt"));
-        axios.get('http://uberlo.herokuapp.com/user', {
+        axios.get(global.baseURL + '/user', {
             headers: {
                 Authorization: 'JWT ' + token
               }
