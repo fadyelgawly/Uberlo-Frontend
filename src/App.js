@@ -19,6 +19,7 @@ import { NoMatch } from './NoMatch';
 import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
 import { Jumbotron } from './components/Jumbotron';
+import { Ride } from './Ride';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Route exact path="/driverWait" component={ driverWait } />
             <Route exact path="/drive" component={ Drive } />
             <Route exact path="/login" component={ Login } />
+            <Route exact path="/signup" component={ Ride } />
             <Route exact  component = {NoMatch} />
           </Switch>
         </Router>

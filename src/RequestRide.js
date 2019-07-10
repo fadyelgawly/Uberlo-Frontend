@@ -10,7 +10,10 @@ export class RequestRide extends Component {
 
 
     state = {
-        request: null,
+        request: {
+            fromArea: null,
+            toArea: null
+        },
         user: {
             firstname: null,
             lastname: null
@@ -21,23 +24,33 @@ export class RequestRide extends Component {
 
     onSubmit = () => {
 
+        let self = this;
         const token = JSON.parse(localStorage.getItem("jwt"));
         console.log(token);
         console.log(this.state);
-        axios.post('http://uberlo.herokuapp.com/requestride', {
-            headers: {
-                Authorization: 'JWT ' + token
-            }
-        })
-            .then((response) => {
-                console.log(response);
-                this.setState({
-                    user: response.data.user
-                });
+
+        if(this.state.request.fromArea && this.state.request.toArea){
+
+            axios.post('http://uberlo.herokuapp.com/requestride', {
+                headers: {
+                    Authorization: 'JWT ' + token
+                },
+                data: {
+                    ...this.state.request
+                }
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .then((response) => {
+                    console.log(response);
+                    this.setState({
+                        user: response.data.user
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        } else {
+
+        }
 
 
     };
@@ -46,7 +59,7 @@ export class RequestRide extends Component {
     componentDidMount(){
         
         const token = JSON.parse(localStorage.getItem("jwt"));
-        axios.get('http://uberlo.herokuapp.com/user', {
+        axios.post('http://uberlo.herokuapp.com/user', {
             headers: {
                 Authorization: 'JWT ' + token
               }
@@ -74,8 +87,10 @@ export class RequestRide extends Component {
                     <Grid>
                         <Dropdown onSelect={(e) => {
                                 this.setState({
-                                    toArea: this.state.toArea,
-                                    fromArea: e
+                                    request: {
+                                        toArea: this.state.request.toArea,
+                                        fromArea: e
+                                    }
                                 });
                                 console.log(this.state);
                             }}>
@@ -90,8 +105,10 @@ export class RequestRide extends Component {
                         </Dropdown>&nbsp;
                         <Dropdown onSelect={(e) => {
                                 this.setState({
-                                    fromArea: this.state.fromArea,
-                                    to: e
+                                    request: {    
+                                        fromArea: this.state.request.fromArea,
+                                        toArea: e
+                                    }
                                 });
                                 console.log(this.state);
                             }}>
@@ -99,9 +116,9 @@ export class RequestRide extends Component {
                                 To
                     </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey = 'to 0'>Masr El Gedida</Dropdown.Item>
-                                <Dropdown.Item eventKey = 'to 1'>Tagamoa</Dropdown.Item>
-                                <Dropdown.Item eventKey = 'to 2'>Zamalek</Dropdown.Item>
+                                <Dropdown.Item eventKey = '0'>Masr El Gedida</Dropdown.Item>
+                                <Dropdown.Item eventKey = '1'>Tagamoa</Dropdown.Item>
+                                <Dropdown.Item eventKey = '2'>Zamalek</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown> &nbsp;
                 <TextField
