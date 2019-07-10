@@ -4,9 +4,6 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import "react-table/react-table.css"
 import { Alert } from 'reactstrap';
-import { Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
-import { makeStyles } from '@material-ui/core/styles';
 
 export class driverWait extends Component {
 

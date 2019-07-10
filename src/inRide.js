@@ -3,8 +3,8 @@ import ReactTable from "react-table";
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import "react-table/react-table.css"
-import { Alert } from 'reactstrap';
-import { makeStyles } from '@material-ui/core/styles';
+//import { Alert } from 'reactstrap';
+//import { makeStyles } from '@material-ui/core/styles';
 
 export class inRide extends Component {
 

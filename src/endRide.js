@@ -3,8 +3,6 @@ import ReactTable from "react-table";
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import "react-table/react-table.css"
-import { Alert } from 'reactstrap';
-import { makeStyles } from '@material-ui/core/styles';
 import StarRatingComponent from 'react-star-rating-component';
 
 export class endRide extends Component {

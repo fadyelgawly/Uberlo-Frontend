@@ -17,7 +17,9 @@ export class RequestRide extends Component {
         user: {
             firstname: null,
             lastname: null
-        }
+        },
+
+        requested: false
 
     };
 
@@ -43,7 +45,6 @@ export class RequestRide extends Component {
 
     onSubmit = () => {
 
-        let self = this;
         const token = JSON.parse(localStorage.getItem("jwt"));
         console.log(token);
         console.log(this.state);

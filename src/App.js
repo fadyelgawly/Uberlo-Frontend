@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home } from './Home';
 import { acceptRides } from './acceptRides';
 import { endRide } from './endRide';
-import { admin } from './admin';
+import { Admin } from './admin';
 import { inRide } from './inRide';
 import { RequestRide } from './RequestRide';
 import { forgotPassword } from './forgotPassword';
@@ -20,6 +20,7 @@ import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
 import { Jumbotron } from './components/Jumbotron';
 import { Ride } from './Ride';
+import { adminDashboard } from './pages/admin/adminDashboard';
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" component={ Home } />
-            <Route exact path="/admin" component={ admin } />
+            <Route exact path="/admin" component={ Admin } />
             <Route exact path="/inDrive" component={ inDrive } />
             <Route exact path="/acceptRides" component={ acceptRides } />
             <Route exact path="/rider/history" component={ ridesHistory } />
@@ -48,7 +49,8 @@ function App() {
             <Route exact path="/drive" component={ Drive } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/signup" component={ Ride } />
-            <Route exact  component = {NoMatch} />
+            <Route exact path="/admin/dashboard" component={ adminDashboard } />
+            <Route exact  component = { NoMatch } />
           </Switch>
         </Router>
       </Layout>
