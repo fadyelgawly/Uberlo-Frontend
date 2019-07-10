@@ -1,0 +1,1 @@
+npm i react-scripts react-router-dom nodemon axios @material-ui/core @material-ui/icons react-bootstrap bootstrap mdbreact react-alert react-alert-template-basic react-star-rating-component react-table reactstrap styled-components
