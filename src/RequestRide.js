@@ -10,9 +10,14 @@ export class RequestRide extends Component {
 
 
     state = {
-        request: {}
+        request: null,
+        user: {
+            firstname: null,
+            lastname: null
+        }
 
     };
+   
 
     onSubmit = () => {
 
@@ -37,9 +42,26 @@ export class RequestRide extends Component {
 
     };
 
-    handleSelect = (e) => {
-        console.log("Event: " + e);
-    };
+    
+    componentDidMount(){
+        
+        const token = JSON.parse(localStorage.getItem("jwt"));
+        axios.get('http://uberlo.herokuapp.com/user', {
+            headers: {
+                Authorization: 'JWT ' + token
+              }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({
+                user: response.data.user
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });   
+    }
+
 
     render() {
         return (
@@ -47,23 +69,31 @@ export class RequestRide extends Component {
                 <Container>
 
                     <h2>
-                        Hello Ismail Sharkawy
-            </h2>
+                        Hello {this.state.user.firstname} {this.state.user.lastname}
+                    </h2>
                     <Grid>
                         <Dropdown onSelect={(e) => {
-                                this.handleSelect(e);
+                                this.setState({
+                                    toArea: this.state.toArea,
+                                    fromArea: e
+                                });
+                                console.log(this.state);
                             }}>
                             <Dropdown.Toggle variant="success" id="dropdown-basic" >
                                 From
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey = 'from 0'>Masr El Gedida</Dropdown.Item>
-                                <Dropdown.Item eventKey = 'from 1'>Tagamoa</Dropdown.Item>
-                                <Dropdown.Item eventKey = 'from 2'>Zamalek</Dropdown.Item>
+                                <Dropdown.Item eventKey = '0'>Masr El Gedida</Dropdown.Item>
+                                <Dropdown.Item eventKey = '1'>Tagamoa</Dropdown.Item>
+                                <Dropdown.Item eventKey = '2'>Zamalek</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>&nbsp;
                         <Dropdown onSelect={(e) => {
-                                this.handleSelect(e);
+                                this.setState({
+                                    fromArea: this.state.fromArea,
+                                    to: e
+                                });
+                                console.log(this.state);
                             }}>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 To
