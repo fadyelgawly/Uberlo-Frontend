@@ -1,11 +1,8 @@
 import React from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import axios from 'axios';
 
 
 export class SwitchUser extends React.Component {
-
-
 
     constructor(props, context) {
         super(props, context);
@@ -16,46 +13,32 @@ export class SwitchUser extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
-        const token = JSON.parse(localStorage.getItem("jwt"));
-        if (token) {
-            axios.get(global.baseURL + '/admin/users', {
-                headers: {
-                    Authorization: 'JWT ' + token
-                }
-            })
-                .then((response) => {
-                    this.setState({
-                        isLoggedIn: true,
-                        isAdmin: response.data.isAdmin,
-                        isDriver: response.data.isDriver
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (user) {
+            this.setState({
+                isLoggedIn: true,
+                isAdmin: user.isAdmin,
+                isDriver: user.isDriver
+            });
         } else {
             this.setState({
                 loggedin: false
             });
         }
-
     }
-
-
     render() {
-        if (this.state.isLoggedIn && (this.state.isAdmin || this.state.isDriver)) {
-            return (
-                <div>
-                    <DropdownButton id="dropdown-basic-button" title="Switch">
-                        <Dropdown.Item href="#/action-1">Rider</Dropdown.Item>
-                        {this.state.isDriver?  <Dropdown.Item href="#/action-2">Driver</Dropdown.Item> : null}
-                        {this.state.isAdmin? <Dropdown.Item href="#/action-3">Admin</Dropdown.Item> : null } 
-                    </DropdownButton>
-                </div>
-            );
-        }
+        return (
+            <div>
+                <DropdownButton id="dropdown-basic-button" title="Switch">
+                    <Dropdown.Item href="/rider/dashboard">Rider</Dropdown.Item>
+                    {this.state.isDriver ? <Dropdown.Item href="/driver/dashboard">Driver</Dropdown.Item> : null}
+                    {this.state.isAdmin ? <Dropdown.Item href="/admin/dashboard">Admin</Dropdown.Item> : null}
+                </DropdownButton>
+            </div>
+        );
     }
 }
 

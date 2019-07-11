@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 import LoginForm from '../../components/LoginForm';
 import axios from 'axios';
 import '../../global';
@@ -9,8 +9,23 @@ import '../../global';
 export class Login extends Component{
 
     state = { 
-        loggedin: false
+        loggedin: null
     };
+
+    componentWillMount = () => {
+        const token = JSON.parse(localStorage.getItem("jwt"));
+
+        if(token) {
+            this.setState({
+                loggedin: true
+            });
+        } else {
+            this.setState({
+                loggedin: false
+            });
+        }
+    }
+
     
     handleInputChange = (event) => {
         const target = event.target;
@@ -35,6 +50,7 @@ export class Login extends Component{
             
             localStorage.clear();
             localStorage.setItem('jwt', JSON.stringify(response.data.token));
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
             self.setState({ 
                 loggedin : true 

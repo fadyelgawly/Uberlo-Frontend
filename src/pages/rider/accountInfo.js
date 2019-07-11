@@ -1,46 +1,40 @@
 import React, { Component } from 'react';
 import "react-table/react-table.css"
-import axios from 'axios';
-import '../../global'
+import { Redirect } from 'react-router';
+import '../../global';
+import { Button } from 'react-bootstrap';
 
 export class accountInfo extends Component {
 
 
 
     state = {
-        user: {},
+        user: null,
         token: null
     };
     componentWillMount() {
+
         const token = JSON.parse(localStorage.getItem("jwt"));
-        console.log(token);
+        const user = JSON.parse(localStorage.getItem("user"));
+        
+
         this.setState({
-            token: token
+            token: token,
+            user: user
         });
 
-        axios.get(global.baseURL + '/user', {
-            headers: {
-                Authorization: 'JWT ' + token
-            }
-        })
-            .then((response) => {
-                console.log(response);
-                this.setState({
-                    user: response.data.user
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     render() {
         if (!(this.state.token))
-            return (<div>Please login then come back</div>);
+            return (
+                <Redirect to="/login" />
+            );
 
         else if (this.state.user.id)
             return (
                 <form>
+                    <Button variant="primary" href="/rider/request">Primary</Button>
                     <div>
                         <label>
                             First Name:
@@ -55,7 +49,7 @@ export class accountInfo extends Component {
                     </div>
                     <div>
                         <label>
-                            Phone: 
+                            Phone:
                         </label>
                         {this.state.user.phone}
                     </div>
