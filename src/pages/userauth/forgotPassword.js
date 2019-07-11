@@ -30,7 +30,7 @@ export class forgotPassword extends Component{
                     variant="outlined"
                     required
                     fullWidth
-                    name="phoneNo"
+                    name="phone"
                     label="Phone Number"
                    
                    

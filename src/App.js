@@ -1,12 +1,12 @@
 import React /*, {Component } */from 'react';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { Home } from './Home';
 import { acceptRides } from './pages/driver/acceptRides';
 import { endRide } from './endRide';
 import { inRide } from './inRide';
 import { RequestRide } from './RequestRide';
 import { forgotPassword } from './pages/userauth/forgotPassword';
-
 import { inDrive} from './inDrive';
 import { ridesHistoryDriver } from './ridesHistoryDriver';
 import { acceptWait } from './acceptWait';
