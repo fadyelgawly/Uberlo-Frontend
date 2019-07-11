@@ -8,6 +8,8 @@ import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import './global'
 
+
+
 export class RequestRide extends Component {
 
 
@@ -20,6 +22,11 @@ export class RequestRide extends Component {
             firstname: null,
             lastname: null
         },
+        ride: null,
+
+
+        fromAreaString: null,
+        toAreaString: null,
 
         requested: false,
         accepted: false,
@@ -28,13 +35,74 @@ export class RequestRide extends Component {
 
     };
 
+
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.updateRideState(), 10000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    decodeLocation(id) {
+        switch (parseInt(id)) {
+
+            case 0:
+                return ('Masr El Gedida');
+            case 1:
+                return ('Tagamoa');
+            case 2:
+                return ('Zamalek');
+            default:
+                return ('Unknown');
+        }
+    }
+
+    updateRideState() {
+
+
+
+        const token = JSON.parse(localStorage.getItem("jwt"));
+
+        axios.get(global.baseURL + '/getrequestedride', {
+            headers: {
+                Authorization: `JWT ${token}`
+            }
+        })
+            .then((response) => {
+                if (response.data.ride) {
+                    this.setState({
+                        ride: response.data.ride,
+                        requested: true,
+                        fromAreaString: this.decodeLocation(response.data.ride.fromArea),
+                        toAreaString: this.decodeLocation(response.data.ride.toArea)
+
+                    });
+                } else {
+                    //Inform request failure
+                }
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+
+    }
+
+
     componentWillMount() {
 
+        this.updateRideState();
         const user = JSON.parse(localStorage.getItem("user"));
         this.setState({
             user: user
         });
     }
+
+
 
     onSubmit = () => {
         console.log('On Submit');
@@ -144,15 +212,19 @@ export class RequestRide extends Component {
                     </Container>
                 </div>
             )
-        } else if (!this.state.accepted) {
+        } else if (this.state.ride) {
             return (
                 <div>
-                    <h2>Waiting for driver to accept your trip</h2>
+                    <h2>Waiting for a driver to accept your trip</h2>
+
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} ,
+
+                    The status of the ride is {this.state.ride.rideStatus}.
 
                 </div>
             );
         } else {
-            return (<div>Will see what got you here later</div>);
+            return (<div>Please wait.. you should be served soon</div>);
         }
     }
 }
