@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 import './global'
 
 export class RequestRide extends Component {
@@ -29,29 +30,21 @@ export class RequestRide extends Component {
 
     componentWillMount() {
 
-        const token = JSON.parse(localStorage.getItem("jwt"));
-        console.log(token);
-        axios.get(global.baseURL + '/user', {
-            headers: {
-                Authorization: `JWT ${token}`
-            }
-        })
-            .then((response) => {
-                this.setState({
-                    user: response.data.user
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
+        const user = JSON.parse(localStorage.getItem("user"));
+        this.setState({
+            user: user
+        });
+    }
 
     onSubmit = () => {
+        console.log('On Submit');
 
-        const token = JSON.parse(localStorage.getItem("jwt"));
+        console.log(this.state);
+
 
         if (this.state.request.fromArea && this.state.request.toArea) {
-
+            console.log('will request');
+            const token = JSON.parse(localStorage.getItem("jwt"));
             axios.post(global.baseURL + '/requestride', {
                 ...this.state.request
             }, {
@@ -60,17 +53,26 @@ export class RequestRide extends Component {
                     }
                 })
                 .then((response) => {
-                    console.log(response);
+                    if (response.data.successful) {
+                        this.setState({
+                            requested: response.data.successful
+                        });
+                    } else {
+                        //Inform request failure
+                    }
 
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-        } else {
-
-            //Nofity user to choose locations
-
+        } else if (this.state.request.fromArea) {
+            console.log('Choose a pickup');
+            //NotificationManager.error('Please choose a pickup location');
+        } else if (this.state.request.toArea) {
+            console.log('Choose a destination');
+            //NotificationManager.error('Please choose a destination location');
         }
+        console.log('leaving onsub');
 
 
     };
@@ -80,76 +82,77 @@ export class RequestRide extends Component {
 
 
     render() {
-        return (
-            <div>
-                <Container>
-
-                    <h2>
-                        Hello {this.state.user.firstname} {this.state.user.lastname}
-                    </h2>
-                    <Grid>
-                        <Dropdown onSelect={(e) => {
-                            this.setState({
-                                request: {
-                                    toArea: this.state.request.toArea,
-                                    fromArea: e
-                                }
-                            });
-                        }}>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic" >
-                                From
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item eventKey='0'>Masr El Gedida  </Dropdown.Item>
-                                <Dropdown.Item eventKey='1'>Tagamoa         </Dropdown.Item>
-                                <Dropdown.Item eventKey='2'>Zamalek         </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown> {this.state.request.fromArea} &nbsp;
-                        <Dropdown onSelect={(e) => {
-                            this.setState({
-                                request: {
-                                    fromArea: this.state.request.fromArea,
-                                    toArea: e
-                                }
-                            });
-                        }}>   
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                To
-                    </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item eventKey='0'>Masr El Gedida</Dropdown.Item>
-                                <Dropdown.Item eventKey='1'>Tagamoa</Dropdown.Item>
-                                <Dropdown.Item eventKey='2'>Zamalek</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown> {this.state.request.toArea}  &nbsp;
-                <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            name="code"
-                            label="Use Promo"
-
-                        />&nbsp;
-                <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary">
-                            View Fare
-                </Button> &nbsp;
-                <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                                this.onSubmit();
+        if (!this.state.requested) {
+            return (
+                <div>
+                    <h2>Enter request details</h2>
+                    <Container>
+                        <Grid>
+                            <Dropdown onSelect={(e) => {
+                                this.setState({
+                                    request: {
+                                        toArea: this.state.request.toArea,
+                                        fromArea: e
+                                    }
+                                });
                             }}>
-                            Request Ride
+                                <Dropdown.Toggle variant="success" id="dropdown-basic" >
+                                    From
+                            </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item eventKey='0'>Masr El Gedida  </Dropdown.Item>
+                                    <Dropdown.Item eventKey='1'>Tagamoa         </Dropdown.Item>
+                                    <Dropdown.Item eventKey='2'>Zamalek         </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown> {this.state.request.fromArea} &nbsp;
+                        <Dropdown onSelect={(e) => {
+                                this.setState({
+                                    request: {
+                                        fromArea: this.state.request.fromArea,
+                                        toArea: e
+                                    }
+                                });
+                            }}>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    To
+                    </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item eventKey='0'>Masr El Gedida</Dropdown.Item>
+                                    <Dropdown.Item eventKey='1'>Tagamoa</Dropdown.Item>
+                                    <Dropdown.Item eventKey='2'>Zamalek</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown> {this.state.request.toArea}  &nbsp;
+                <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="code"
+                                label="Use Promo"
+
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    this.onSubmit();
+                                }}>
+                                Request Ride
                 </Button>
-                    </Grid>
-                </Container>
-            </div>
-        )
+                        </Grid>
+                    </Container>
+                </div>
+            )
+        } else if (!this.state.accepted) {
+            return (
+                <div>
+                    <h2>Waiting for driver to accept your trip</h2>
+
+                </div>
+            );
+        } else {
+            return (<div>Will see what got you here later</div>);
+        }
     }
 }
