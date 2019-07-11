@@ -1,11 +1,11 @@
 import React , { Component } from 'react';
 import { Redirect } from 'react-router'
-import SignUp from './components/Form';
-import './global'
+import SignUp from '../../components/Form';
+import '../../global'
 
 
 
-export class Ride extends Component{
+export class Signup extends Component{
 
     state = { 
         signup: false

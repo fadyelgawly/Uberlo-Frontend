@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import ReactTable from "react-table";
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import "react-table/react-table.css"
 
-export class ridesHistoryDriver extends Component {
+
+export class acceptRides extends Component {
+
+
 
     constructor(props) {
         super(props);
@@ -31,7 +36,12 @@ export class ridesHistoryDriver extends Component {
         const columns = [
             {
                 Header: "Ride No",
-                accessor: "rideNo"
+                accessor: "rideNo",
+
+            },
+            {
+                Header: "Rider",
+                accessor: "rider"
             },
             {
                 Header: "Ride Status",
@@ -50,8 +60,8 @@ export class ridesHistoryDriver extends Component {
                 accessor: "toArea"
             },
             {
-                Header: "Rider",
-                accessor: "rider"
+                Header: "Driver",
+                accessor: "driver"
             },
             {
                 Header: "Request Time",
@@ -64,18 +74,51 @@ export class ridesHistoryDriver extends Component {
             {
                 Header: "Dropoff Time",
                 accessor: "dropiffTime"
+            },
+            {
+                Header: "Actions",
+                Cell: props => {
+                    return (<button style={{ backgroundColor: "black", color: "#fefefe" }}
+                        onClick={() => console.log("test", props)}>Accept </button>)
+                }
             }
 
 
         ]
-        return (
+        return (<Container component="main" maxWidth="xl">
             <ReactTable
-                minRows={1}
                 columns={columns}
-
                 data={this.state.posts}
+
             ></ReactTable>
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+
+                onClick={(e) => {
+                    e.preventDefault();
+
+                }
+                }>
+                Accept
+            </Button>
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+
+                onClick={(e) => {
+                    e.preventDefault();
+
+                }
+                }>
+                Cancel
+            </Button>
+        </Container>
         );
     }
-}
 
+}

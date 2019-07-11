@@ -8,7 +8,7 @@ export class ControlledTabs extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      key: 'profile',
+      key: 'userslist',
     };
   }
 
@@ -19,13 +19,13 @@ export class ControlledTabs extends React.Component {
         activeKey={this.state.key}
         onSelect={key => this.setState({ key })}
       >
-        <Tab eventKey="home" title="Users">
+        <Tab eventKey="userslist" title="Users">
           <React.Fragment>
             <UsersList />
           </React.Fragment>
 
         </Tab>
-        <Tab eventKey="profile" title="Rides">
+        <Tab eventKey="rideslist" title="Rides">
         <React.Fragment>
             <RidesList />
           </React.Fragment>

@@ -1,8 +1,8 @@
 import React , { Component } from 'react';
 import { Redirect } from 'react-router'
-import LoginForm from './components/LoginForm';
+import LoginForm from '../../components/LoginForm';
 import axios from 'axios';
-import './global';
+import '../../global';
 
 
 
@@ -53,7 +53,7 @@ export class Login extends Component{
     render(){
         if (this.state.loggedin){
             return(
-                <Redirect to = "/info"/>
+                <Redirect to = "/rider/dashboard"/>
             );
         }
         return(

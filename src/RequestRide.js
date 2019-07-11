@@ -20,52 +20,52 @@ export class RequestRide extends Component {
             lastname: null
         },
 
-        requested: false
+        requested: false,
+        accepted: false,
+        inride: false,
+        ended: false
 
     };
 
-    componentDidMount(){
-        
+    componentWillMount() {
+
         const token = JSON.parse(localStorage.getItem("jwt"));
         console.log(token);
         axios.get(global.baseURL + '/user', {
             headers: {
                 Authorization: `JWT ${token}`
-              }
+            }
         })
-        .then((response) => {
-            console.log(response);
-            this.setState({
-                user: response.data.user
+            .then((response) => {
+                this.setState({
+                    user: response.data.user
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
             });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });   
     };
 
     onSubmit = () => {
 
         const token = JSON.parse(localStorage.getItem("jwt"));
-        console.log(token);
-        console.log(this.state);
 
-        if(this.state.request.fromArea && this.state.request.toArea){
+        if (this.state.request.fromArea && this.state.request.toArea) {
 
             axios.post(global.baseURL + '/requestride', {
-                    ...this.state.request
-            },{
-                headers: {
-                    Authorization: `JWT ${token}`
-                }
-            })
-            .then((response) => {
+                ...this.state.request
+            }, {
+                    headers: {
+                        Authorization: `JWT ${token}`
+                    }
+                })
+                .then((response) => {
                     console.log(response);
-      
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         } else {
 
             //Nofity user to choose locations
@@ -75,7 +75,7 @@ export class RequestRide extends Component {
 
     };
 
-    
+
 
 
 
@@ -89,47 +89,45 @@ export class RequestRide extends Component {
                     </h2>
                     <Grid>
                         <Dropdown onSelect={(e) => {
-                                this.setState({
-                                    request: {
-                                        toArea: this.state.request.toArea,
-                                        fromArea: e
-                                    }
-                                });
-                            }}>
+                            this.setState({
+                                request: {
+                                    toArea: this.state.request.toArea,
+                                    fromArea: e
+                                }
+                            });
+                        }}>
                             <Dropdown.Toggle variant="success" id="dropdown-basic" >
                                 From
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey = '0'>Masr El Gedida</Dropdown.Item>
-                                <Dropdown.Item eventKey = '1'>Tagamoa</Dropdown.Item>
-                                <Dropdown.Item eventKey = '2'>Zamalek</Dropdown.Item>
+                                <Dropdown.Item eventKey='0'>Masr El Gedida  </Dropdown.Item>
+                                <Dropdown.Item eventKey='1'>Tagamoa         </Dropdown.Item>
+                                <Dropdown.Item eventKey='2'>Zamalek         </Dropdown.Item>
                             </Dropdown.Menu>
-                        </Dropdown>&nbsp;
+                        </Dropdown> {this.state.request.fromArea} &nbsp;
                         <Dropdown onSelect={(e) => {
-                                this.setState({
-                                    request: {    
-                                        fromArea: this.state.request.fromArea,
-                                        toArea: e
-                                    }
-                                });
-                            }}>
+                            this.setState({
+                                request: {
+                                    fromArea: this.state.request.fromArea,
+                                    toArea: e
+                                }
+                            });
+                        }}>   
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 To
                     </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey = '0'>Masr El Gedida</Dropdown.Item>
-                                <Dropdown.Item eventKey = '1'>Tagamoa</Dropdown.Item>
-                                <Dropdown.Item eventKey = '2'>Zamalek</Dropdown.Item>
+                                <Dropdown.Item eventKey='0'>Masr El Gedida</Dropdown.Item>
+                                <Dropdown.Item eventKey='1'>Tagamoa</Dropdown.Item>
+                                <Dropdown.Item eventKey='2'>Zamalek</Dropdown.Item>
                             </Dropdown.Menu>
-                        </Dropdown> &nbsp;
+                        </Dropdown> {this.state.request.toArea}  &nbsp;
                 <TextField
                             variant="outlined"
                             required
                             fullWidth
                             name="code"
                             label="Use Promo"
-
-
 
                         />&nbsp;
                 <Button

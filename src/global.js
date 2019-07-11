@@ -1,1 +1,1 @@
-global.baseURL = 'http://localhost:4000'
+global.baseURL = 'https://uberlo.herokuapp.com'

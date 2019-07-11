@@ -63,7 +63,7 @@ const columns= [
 ]
        return(<Container component="main" maxWidth="xl">
            <ReactTable
-          minRows={1}
+            minRows={1}
             columns={columns}
             
         data={this.state.posts}
