@@ -213,16 +213,43 @@ export class RequestRide extends Component {
                 </div>
             )
         } else if (this.state.ride) {
+            if (this.state.ride.rideStatus === 'R')
             return (
                 <div>
                     <h2>Waiting for a driver to accept your trip</h2>
 
-                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} ,
-
-                    The status of the ride is {this.state.ride.rideStatus}.
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
 
                 </div>
             );
+            if (this.state.ride.rideStatus === 'A')
+            return (
+                <div>
+                    <h2>A driver accepted the ride</h2>
+
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                </div>
+            );
+            if (this.state.ride.rideStatus === 'S')
+            return (
+                <div>
+                    <h2>Your driver started the ride</h2>
+
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                </div>
+            );
+            if (this.state.ride.rideStatus === 'E')
+            return (
+                <div>
+                    <h2>Welcome to {this.state.toAreaString}</h2>
+                    <h3> Your fare will be available shortly </h3>
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                </div>
+            );
+            
         } else {
             return (<div>Please wait.. you should be served soon</div>);
         }
