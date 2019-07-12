@@ -24,7 +24,7 @@ export class Signup extends Component{
     onSubmit = () => {
         console.log('Submitting');
         const self = this;
-        fetch(global.baseURL + '/user/signup', {
+        fetch(global.baseURL + '/signup', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
