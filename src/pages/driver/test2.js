@@ -10,16 +10,19 @@ import Paper from '@material-ui/core/Paper';
 
 const classes = makeStyles(theme => ({
     root: {
-      flexGrow: 1,
+        flexGrow: 1,
     },
     paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
     },
-  }));
-  
+}));
+var isAvailable1;
+var currentArea1;
 var i = 0;
+var noOfRides=0;
+
 export class test2 extends Component {
 
 
@@ -61,10 +64,15 @@ export class test2 extends Component {
             .then((response) => {
                 console.log(response.data);
                 let users = response.data.users;
+                let isAvailable= response.data.users;
                 this.setState({
-                    users: users
+                    users: users,
+                  request:{isAvailable:e,
+                    currentArea:currentArea1
+              }  
+
                 });
-                console.log(this.state.users);
+                
 
 
             })
@@ -74,7 +82,7 @@ export class test2 extends Component {
 
     }
 
-    onSelectArea = (e) => {
+    onSelectArea = (b) => {
 
 
         const token = JSON.parse(localStorage.getItem("jwt"));
@@ -84,7 +92,7 @@ export class test2 extends Component {
         axios.patch('http://uberlo.herokuapp.com/driver/changelocation',
 
                 {
-                    currentArea: e
+                    currentArea: b
                 }, {
 
                     headers: {
@@ -95,8 +103,12 @@ export class test2 extends Component {
             .then((response) => {
                 console.log(response.data);
                 let rides = response.data.rides;
+               
                 this.setState({
-                    rides: response.data.rides
+                    rides: response.data.rides,
+                    
+                    request:{isAvailable:isAvailable1,
+                        currentArea:b}
                 });
                 console.log(this.state);
 
@@ -109,6 +121,11 @@ export class test2 extends Component {
     }
 
     onSubmit = () => {
+      console.log(this.state.request.currentArea)
+      console.log(this.state.request.isAvailable)
+
+        if((this.state.request.currentArea!=null) && (this.state.request.isAvailable=='1'))
+       {
         const token = JSON.parse(localStorage.getItem("jwt"));
 
         axios.get(global.baseURL + '/getavailablerides', {
@@ -119,6 +136,7 @@ export class test2 extends Component {
             .then((response) => {
                 console.log(response);
                 console.log(response.data.rides.length);
+                noOfRides=response.data.rides.length;
                 let toArea = response.data.rides[i].toArea;
                 let rideNo = response.data.rides[i].rideNo;
                 if (toArea == "0") {
@@ -126,7 +144,9 @@ export class test2 extends Component {
 
                         request: {
                             toArea: "Masr El Gedida",
-                            rideNo:rideNo
+                            rideNo: rideNo,
+                            isAvailable:isAvailable1,
+                            currentArea:currentArea1
                         }
                     });
                 } else if (toArea == "1") {
@@ -134,7 +154,9 @@ export class test2 extends Component {
 
                         request: {
                             toArea: "Tagamoa",
-                            rideNo:rideNo
+                            rideNo: rideNo,
+                            isAvailable:isAvailable1,
+                            currentArea:currentArea1
                         }
                     });
                 } else if (toArea == "2") {
@@ -142,7 +164,9 @@ export class test2 extends Component {
 
                         request: {
                             toArea: "Zamalek",
-                            rideNo:rideNo
+                            rideNo: rideNo,
+                            isAvailable:isAvailable1,
+                            currentArea:currentArea1
                         }
                     });
                 }
@@ -154,10 +178,10 @@ export class test2 extends Component {
         console.log(this.state.request.toArea);
 
 
-    }
+    }else {}}
+     
 
-
-    onSubmitAccept= (e) => {
+    onSubmitAccept = (e) => {
 
 
         const token = JSON.parse(localStorage.getItem("jwt"));
@@ -177,11 +201,6 @@ export class test2 extends Component {
             )
             .then((response) => {
                 console.log(response.data);
-               let rideNo = response.data.rides[i].rideNo;
-              
-               // console.log(this.state.request.rideNo);
-
-
             })
             .catch(function (error) {
                 console.log(error);
@@ -199,6 +218,7 @@ render() {
                  
                < Dropdown onSelect = {
                     (e) => {
+                         isAvailable1=e;
                         this.onSelectAvailable(e);
                         
                              
@@ -215,9 +235,10 @@ render() {
                      </Dropdown>&nbsp;
 
 <Dropdown onSelect = {
-    (e) => {
+    (b) => {
        
-        this.onSelectArea(e);
+        currentArea1=b;
+        this.onSelectArea(b);
             
              
          }}>
@@ -234,17 +255,9 @@ render() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary"
+                                color="inherit"
                                 onClick={() => {
-                                    this.onSubmit();
-                                    
-                                    
-                                 
-                                   //for (; i < len; i++) {
-                                    // print(this.response.data.rides[i].toArea)}
-                                    
-                                    
-
+                                    this.onSubmit()
                                 }}>
                                 Submit
                                 
@@ -271,10 +284,13 @@ render() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary"
+                                color="secondary"
                                 onClick={() => {
+                                    this.onSubmit()
+                                    if(i<noOfRides-1)
                                     i++
-                                    
+                                    else i=0;
+                                
 
                                 }}>
                                 Reject
