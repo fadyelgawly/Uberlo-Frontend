@@ -94,6 +94,18 @@ export default function SignUp(props) {
                     variant="outlined"
                     required
                     fullWidth
+                    id="phone"
+                    label="Phone Number"
+                    name="phone"
+                    onChange={props.handleInputChange}
+                    autoComplete="phone"
+                />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
                     name="password"
                     label="Password"
                     type="password"

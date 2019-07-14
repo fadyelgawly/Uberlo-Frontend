@@ -31,10 +31,11 @@ export class accountInfo extends Component {
                 <Redirect to="/login" />
             );
 
-        else if (this.state.user.id)
+        else if (this.state.user)
+                if (this.state.user.id)
             return (
                 <form>
-                    <Button variant="primary" href="/rider/request">Primary</Button>
+                    <Button variant="primary" href="/rider/request"> Request a ride </Button>
                     <div>
                         <label>
                             First Name:
@@ -57,6 +58,9 @@ export class accountInfo extends Component {
             );
         else
             return (<div>Retrieving user details.. Please wait</div>);
+
+            //localStorage.clear();
+        return(<div>If you see this, clear your cookies, go incognito or tell Fady he's in trouble.<br/> Actually logout and then login </div>);
 
     }
 }

@@ -61,8 +61,6 @@ export class RequestRide extends Component {
 
     updateRideState() {
 
-
-
         const token = JSON.parse(localStorage.getItem("jwt"));
 
         axios.get(global.baseURL + '/getrequestedride', {
@@ -146,8 +144,33 @@ export class RequestRide extends Component {
     };
 
 
+    cancelRequest = () => {
+  
+            console.log('will request');
+            const token = JSON.parse(localStorage.getItem("jwt"));
+            axios.patch(global.baseURL + '/rider/cancel', {
+                ...this.state.request
+            }, {
+                    headers: {
+                        Authorization: `JWT ${token}`
+                    }
+                })
+                .then((response) => {
+                    if (response.data.successful) {
+                        this.setState({
+                            requested: response.data.successful
+                        });
+                    } else {
+                        //Inform request failure
+                    }
 
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+ 
 
+    };
 
     render() {
         if (!this.state.requested) {
@@ -220,21 +243,83 @@ export class RequestRide extends Component {
 
                     You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
 
+                    <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    this.cancelRequest();
+                                }}>
+                                Cancel Request
+                </Button>
+
                 </div>
             );
             if (this.state.ride.rideStatus === 'A')
             return (
                 <div>
-                    <h2>A driver accepted the ride</h2>
+                    <h2>A driver accepted the ride, wait for him to arrive</h2>
 
                     You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                    <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    this.cancelRequest();
+                                }}>
+                                Cancel Request
+                </Button>
+                You will charged 10LE if you cancel
+
+                </div>
+            );
+            if (this.state.ride.rideStatus === 'V')
+            return (
+                <div>
+                    <h2>Your driver is here</h2>
+
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                    <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    this.cancelRequest();
+                                }}>
+                                Cancel Request
+                </Button>
+                You will charged 10LE if you cancel
 
                 </div>
             );
             if (this.state.ride.rideStatus === 'S')
             return (
                 <div>
-                    <h2>Your driver started the ride</h2>
+                    <h2>In ride</h2>
+
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                </div>
+            );
+            if (this.state.ride.rideStatus === 'D')
+            return (
+                <div>
+                    <h2>Your driver cancelled</h2>
+
+                    You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
+
+                </div>
+            );
+            if (this.state.ride.rideStatus === 'C')
+            return (
+                <div>
+                    <h2>You cancelled your trip</h2>
 
                     You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
 
@@ -243,6 +328,7 @@ export class RequestRide extends Component {
             if (this.state.ride.rideStatus === 'E')
             return (
                 <div>
+
                     <h2>Welcome to {this.state.toAreaString}</h2>
                     <h3> Your fare will be available shortly </h3>
                     You requested a trip from {this.state.fromAreaString} to {this.state.toAreaString} 
@@ -253,5 +339,6 @@ export class RequestRide extends Component {
         } else {
             return (<div>Please wait.. you should be served soon</div>);
         }
+        return(<div>If you see this, tell Fady he's in trouble</div>);
     }
 }
