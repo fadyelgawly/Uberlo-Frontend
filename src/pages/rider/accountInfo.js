@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import "react-table/react-table.css"
 import { Redirect } from 'react-router';
 import '../../global';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup, Form, Row, Col } from 'react-bootstrap';
+import "react-bootstrap/dist/react-bootstrap.min.js";
+import axios from 'axios';
+
 
 export class accountInfo extends Component {
 
-
-
     state = {
         user: null,
-        token: null
+        token: null,
+        edit: false,
+        firstname: null,
+        lastname: null,
+        phone:null
     };
     componentWillMount() {
 
@@ -25,39 +29,90 @@ export class accountInfo extends Component {
 
     }
 
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    editClick () {
+        this.setState(state => ({
+            edit: true
+        }));
+    }
+
+    submitClick () {
+        var m_user = this.state.user;
+        if(this.state.firstname) m_user.firstname = this.state.firstname;
+        if(this.state.lastname) m_user.lastname = this.state.lastname;
+        if(this.state.phone) m_user.phone = this.state.phone;
+        axios.patch(global.baseURL + '/user', m_user,{
+            headers: {
+                Authorization: `JWT ${this.state.token}`
+            }
+        }).then((res) => {
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+        });
+        return (<Redirect to="/rider/dashboard" />);
+    }
+
     render() {
         if (!(this.state.token))
             return (
                 <Redirect to="/login" />
             );
 
-        else if (this.state.user.id)
-            return (
-                <form>
-                    <Button variant="primary" href="/rider/request">Primary</Button>
-                    <div>
-                        <label>
-                            First Name:
-                        </label>
-                        {this.state.user.firstname}
-                    </div>
-                    <div>
-                        <label>
-                            Last Name:
-                        </label>
-                        {this.state.user.lastname}
-                    </div>
-                    <div>
-                        <label>
-                            Phone:
-                        </label>
-                        {this.state.user.phone}
-                    </div>
-                </form>
-            );
+        else if (this.state.user.id){
+            if (!this.state.edit){
+                return (
+                    <React.Fragment>
+                        <ListGroup>
+                            <ListGroup.Item><Row>
+                                <Form.Label column sm="4">First Name</Form.Label>
+                                <Col><Form.Control plaintext readOnly defaultValue={this.state.user.firstname} /></Col>
+                            </Row></ListGroup.Item>
+                            <ListGroup.Item><Row>
+                                <Form.Label column sm="4">Last Name</Form.Label>
+                                <Col><Form.Control plaintext readOnly defaultValue={this.state.user.lastname} /></Col>
+                            </Row></ListGroup.Item>
+                            <ListGroup.Item><Row>
+                                <Form.Label column sm="4">Phone</Form.Label>
+                                <Col><Form.Control plaintext readOnly defaultValue={this.state.user.phone} /></Col>
+                            </Row></ListGroup.Item>
+                            <ListGroup.Item><Row>
+                                <Col><Button onClick={()=>{this.editClick()}}>Edit</Button></Col> 
+                            </Row></ListGroup.Item>
+                        </ListGroup>
+                    </React.Fragment>
+                );
+            }
+            else {
+                return (
+                    <React.Fragment>
+                        <ListGroup>
+                            <ListGroup.Item><Row>
+                                <Form.Label column sm="4">First Name</Form.Label>
+                                <Col><Form.Control name="firstname" defaultValue={this.state.user.firstname} onChange={e => {this.handleChange(e)}}/></Col>
+                            </Row></ListGroup.Item>
+                            <ListGroup.Item><Row>
+                                <Form.Label column sm="4">Last Name</Form.Label>
+                                <Col><Form.Control name="lastname" defaultValue={this.state.user.lastname} onChange={e => {this.handleChange(e)}}/></Col>
+                            </Row></ListGroup.Item>
+                            <ListGroup.Item><Row>
+                                <Form.Label column sm="4">Phone</Form.Label>
+                                <Col><Form.Control name="phone" defaultValue={this.state.user.phone} onChange={e => {this.handleChange(e)}}/></Col>
+                            </Row></ListGroup.Item>
+                            <ListGroup.Item><Row>
+                                <Col><Button href="/rider/dashboard">Cancel</Button></Col>
+                                <Col><Button onClick={()=>{this.submitClick()}}>Submit</Button></Col> 
+                            </Row></ListGroup.Item>
+                        </ListGroup>
+                    </React.Fragment>
+                );
+            }
+        }
         else
             return (<div>Retrieving user details.. Please wait</div>);
 
     }
 }
-
