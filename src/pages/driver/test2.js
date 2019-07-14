@@ -121,7 +121,7 @@ export class test2 extends Component {
 
     if (
       this.state.request.currentArea != null &&
-      this.state.request.isAvailable == "1"
+      this.state.request.isAvailable === "1"
     ) {
       const token = JSON.parse(localStorage.getItem("jwt"));
 
@@ -137,7 +137,7 @@ export class test2 extends Component {
           noOfRides = response.data.rides.length;
           let toArea = response.data.rides[i].toArea;
           let rideNo = response.data.rides[i].rideNo;
-          if (toArea == "0") {
+          if (toArea === "0") {
             this.setState({
               request: {
                 toArea: "Masr El Gedida",
@@ -146,7 +146,7 @@ export class test2 extends Component {
                 currentArea: currentArea1
               }
             });
-          } else if (toArea == "1") {
+          } else if (toArea === "1") {
             this.setState({
               request: {
                 toArea: "Tagamoa",
@@ -155,7 +155,7 @@ export class test2 extends Component {
                 currentArea: currentArea1
               }
             });
-          } else if (toArea == "2") {
+          } else if (toArea === "2") {
             this.setState({
               request: {
                 toArea: "Zamalek",
