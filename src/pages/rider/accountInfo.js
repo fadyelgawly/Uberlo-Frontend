@@ -66,6 +66,7 @@ export class accountInfo extends Component {
             if (!this.state.edit){
                 return (
                     <React.Fragment>
+                        <Button href="/rider/request">Request a Ride</Button>
                         <ListGroup>
                             <ListGroup.Item><Row>
                                 <Form.Label column sm="4">First Name</Form.Label>
@@ -107,6 +108,7 @@ export class accountInfo extends Component {
                                 <Col><Button onClick={()=>{this.submitClick()}}>Submit</Button></Col> 
                             </Row></ListGroup.Item>
                         </ListGroup>
+                        
                     </React.Fragment>
                 );
             }
