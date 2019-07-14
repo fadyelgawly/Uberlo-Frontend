@@ -34,7 +34,7 @@ export class SwitchUser extends React.Component {
             <div>
                 <DropdownButton id="dropdown-basic-button" title="Switch">
                     <Dropdown.Item href="/rider/dashboard">Rider</Dropdown.Item>
-                    {this.state.isDriver ? <Dropdown.Item href="/driver/dashboard">Driver</Dropdown.Item> : null}
+                    {this.state.isDriver ? <Dropdown.Item href="/test2">Driver</Dropdown.Item> : null}
                     {this.state.isAdmin ? <Dropdown.Item href="/admin/dashboard">Admin</Dropdown.Item> : null}
                 </DropdownButton>
             </div>

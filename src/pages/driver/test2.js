@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import { Redirect } from 'react-router';
+//import { Redirect } from 'react-router';
 import Paper from "@material-ui/core/Paper";
 
 const classes = makeStyles(theme => ({
@@ -64,7 +64,7 @@ export class test2 extends Component {
       .then(response => {
         console.log(response.data);
         let users = response.data.users;
-        let isAvailable = response.data.users;
+        //let isAvailable = response.data.users;
         this.setState({
           users: users,
           request: {
@@ -98,7 +98,7 @@ export class test2 extends Component {
       )
       .then(response => {
         console.log(response.data);
-        let rides = response.data.rides;
+    //    let rides = response.data.rides;
 
         this.setState({
           rides: response.data.rides,
