@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import { Redirect } from 'react-router';
 import Paper from "@material-ui/core/Paper";
 
 const classes = makeStyles(theme => ({
@@ -34,7 +35,10 @@ export class test2 extends Component {
     },
     statusSet: false,
     Accepted: false,
-    tripStarted: false
+    tripStarted: false,
+    isCanceled: false,
+    rideEnded:false
+
   };
   toggle = () => {
     const { show } = this.state;
@@ -180,7 +184,7 @@ export class test2 extends Component {
 
     axios
       .patch(
-        "http://uberlo.herokuapp.com/driver/acceptRide",
+        "https://uberlo.herokuapp.com/driver/acceptride",
 
         {
           rideNo: this.state.request.rideNo
@@ -252,8 +256,68 @@ export class test2 extends Component {
       });
   };
 
+
+  onCancelRide = b => {
+    console.log(this.state.tripStarted);
+    const token = JSON.parse(localStorage.getItem("jwt"));
+
+    console.log(this.state.request.rideNo);
+
+    axios
+      .patch("http://uberlo.herokuapp.com/driver/cancel",
+
+        {
+          rideNo: this.state.request.rideNo
+        },
+        {
+          headers: {
+            Authorization: "JWT " + token
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
+  onArrived = b => {
+    console.log(this.state.tripStarted);
+    const token = JSON.parse(localStorage.getItem("jwt"));
+
+    console.log(this.state.request.rideNo);
+
+    axios
+      .patch("http://uberlo.herokuapp.com/driver/arrive",
+
+        {
+          rideNo: this.state.request.rideNo
+        },
+        {
+          headers: {
+            Authorization: "JWT " + token
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
+
   render() {
-    if (!this.state.Accepted) {
+ //   if (this.state.rideEnded)
+   // {
+///return(
+    //  <Redirect to = "/test2"/>
+            //);
+   // }
+    if ((!this.state.Accepted) || (this.state.rideEnded)) {
       return (
         <Container>
           <h2> Hello ya Swa2 {this.state.request.isAvailable} </h2> &nbsp;
@@ -340,6 +404,23 @@ export class test2 extends Component {
       );
     } else if (!this.state.tripStarted) {
       return (
+        <React-Fragment>
+          <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            this.setState({
+              Accepted: true,
+              tripStarted: true
+            });
+            this.onArrived();
+          }}
+        >
+          Arrived
+        </Button> &nbsp;
+
         <Button
           type="submit"
           fullWidth
@@ -354,9 +435,27 @@ export class test2 extends Component {
           }}
         >
           Start Trip
-        </Button>
+        </Button> &nbsp;
+
+        <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={() => {
+          this.setState({
+            Accepted: true,
+            tripStarted: true,
+            isCanceled:true
+          });
+          this.onCancelRide();
+        }}
+      >
+        Cancel
+      </Button>
+      </React-Fragment>
       );
-    } else if (this.state.tripStarted) {
+    } else if (this.state.tripStarted && !this.state.isCanceled) {
       return (
         <Button
           type="submit"
@@ -366,14 +465,18 @@ export class test2 extends Component {
           onClick={() => {
             this.setState({
               Accepted: true,
-              tripStarted: true
+              tripStarted: true,
+              rideEnded:true
+
             });
             this.onEndRide();
+          
           }}
         >
           End Trip
         </Button>
       );
     }
+  
   }
 }
