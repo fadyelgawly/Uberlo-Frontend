@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-export default function ForgotForm(props) {
+export default function MessageForm(props1) {
 
   
 
@@ -23,10 +23,25 @@ export default function ForgotForm(props) {
               variant="outlined"
               required
               fullWidth
-              id="username"
-              label="User Name"
-              name="username"
-              onChange={props.handleInputChange}  
+              id="code"
+              label="Code"
+              name="code"
+              onChange={props1.handleInputChange}
+              
+              
+          />
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="password"
+              label="New Password"
+              name="password"
+              onChange={props1.handleInputChange}
+              
+              
           />
           </Grid>
      
@@ -40,7 +55,7 @@ export default function ForgotForm(props) {
          
           onClick={(e) => { 
               e.preventDefault();
-              props.onSubmit(); 
+              props1.onSubmit(); 
 
               
           }
