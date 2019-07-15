@@ -42,12 +42,12 @@ function App() {
             <Route exact path="/rider/request" component={ RequestRide} />
             <Route exact path="/driver/history" component={ ridesHistoryDriver } />
             <Route exact path="/forgot" component={ forgotPassword } />
-            <Route exact path="/rider/dashboard" component={ accountInfo } />
             <Route exact path="/end" component={ endRide } />
             <Route exact path="/driverWait" component={ driverWait } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/signup" component={ Signup } />
-            <Route exact path="/driver/request" component={ requestDrive } />
+            <Route exact path="/rider/dashboard" component={ accountInfo } />
+            <Route exact path="/driver/dashboard" component={ requestDrive } />
             <Route exact path="/admin/dashboard" component={ adminDashboard } />
             <Route exact  component = { NoMatch } />
           </Switch>

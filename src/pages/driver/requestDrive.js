@@ -7,8 +7,8 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from 'react-router';
 import Paper from "@material-ui/core/Paper";
-import ReactTable from "react-table";
-import ReactDOM from 'react-dom';
+// import ReactTable from "react-table";
+// import ReactDOM from 'react-dom';
 import StarRatingComponent from 'react-star-rating-component';
 import {  ListGroup, Form, Row, Col } from 'react-bootstrap';
 import "react-bootstrap/dist/react-bootstrap.min.js";
@@ -108,7 +108,7 @@ export class requestDrive extends Component {
       .then(response => {
         console.log(response.data);
 
-        if (currentArea1 == "0") currentArea2 = "Masr El-Gedida";
+        if (currentArea1 === "0") currentArea2 = "Masr El-Gedida";
         this.setState({
           rides: response.data.rides,
           request: {
@@ -116,14 +116,14 @@ export class requestDrive extends Component {
           }
         });
 
-        if (currentArea1 == "1") currentArea2 = "Tagamoa";
+        if (currentArea1 === "1") currentArea2 = "Tagamoa";
         this.setState({
           rides: response.data.rides,
           request: {
             isAvailable: isAvailable1
           }
         });
-        if (currentArea1 == "2") currentArea2 = "Zamalek";
+        if (currentArea1 === "2") currentArea2 = "Zamalek";
         this.setState({
           rides: response.data.rides,
           request: {
@@ -144,7 +144,7 @@ export class requestDrive extends Component {
 
     if (
       this.state.request.currentArea != null &&
-      this.state.request.isAvailable == "1"
+      this.state.request.isAvailable === "1"
     ) {
       const token = JSON.parse(localStorage.getItem("jwt"));
 
@@ -160,7 +160,7 @@ export class requestDrive extends Component {
           noOfRides = response.data.rides.length;
           let toArea = response.data.rides[i].toArea;
           let rideNo = response.data.rides[i].rideNo;
-          if (toArea == "0") {
+          if (toArea === "0") {
             this.setState({
               request: {
                 toArea: "Masr El Gedida",
@@ -169,7 +169,7 @@ export class requestDrive extends Component {
                 currentArea: currentArea1
               }
             });
-          } else if (toArea == "1") {
+          } else if (toArea === "1") {
             this.setState({
               request: {
                 toArea: "Tagamoa",
@@ -178,7 +178,7 @@ export class requestDrive extends Component {
                 currentArea: currentArea1
               }
             });
-          } else if (toArea == "2") {
+          } else if (toArea === "2") {
             this.setState({
               request: {
                 toArea: "Zamalek",
@@ -353,7 +353,7 @@ export class requestDrive extends Component {
       )
       .then(response => {
         console.log(response.data.users);
-        let users = response.data.users;
+      //  let users = response.data.users;
         this.setState({});
       })
       .catch(function(error) {
@@ -397,22 +397,22 @@ export class requestDrive extends Component {
   }
 
   render() {
-    const test = [
-      {
-        Header: "Fare",
-        accessor: "fare",
-        sortable: true
-      },
-      {
-        Header: "from Area",
-        accessor: "fromArea",
-        sortable: true
-      },
-      {
-        Header: "To Area",
-        accessor: "toArea"
-      }
-    ];
+    // const test = [
+    //   {
+    //     Header: "Fare",
+    //     accessor: "fare",
+    //     sortable: true
+    //   },
+    //   {
+    //     Header: "from Area",
+    //     accessor: "fromArea",
+    //     sortable: true
+    //   },
+    //   {
+    //     Header: "To Area",
+    //     accessor: "toArea"
+    //   }
+    // ];
 
     const { rating } = this.state;
     if (this.state.isCanceled) {
