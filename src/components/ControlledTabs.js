@@ -1,6 +1,6 @@
 import React  from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { UsersList } from './UsersList';
+import { UsersList } from '../pages/admin/UsersList';
 import { RidesList } from './RidesList';
 
 export class ControlledTabs extends React.Component {
