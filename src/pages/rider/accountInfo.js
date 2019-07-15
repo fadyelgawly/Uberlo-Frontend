@@ -124,7 +124,7 @@ export class accountInfo extends Component {
             return (<div>Retrieving user details.. Please wait</div>);
 
             //localStorage.clear();
-        return(<div>If you see this, clear your cookies, go incognito or tell Fady he's in trouble.<br/> Actually logout and then login </div>);
+       // return(<div>If you see this, clear your cookies, go incognito or tell Fady he's in trouble.<br/> Actually logout and then login </div>);
 
     }
 }
