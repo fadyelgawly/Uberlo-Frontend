@@ -20,7 +20,7 @@ import { NavigationBar } from './components/NavigationBar';
 import { Jumbotron } from './components/Jumbotron';
 import { Signup } from './pages/userauth/Signup';
 import { adminDashboard } from './pages/admin/adminDashboard';
-import { test2 } from './pages/driver/test2';
+import { requestDrive } from './pages/driver/requestDrive';
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
             <Route exact path="/driverWait" component={ driverWait } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/signup" component={ Signup } />
-            <Route exact path="/test2" component={ test2 } />
+            <Route exact path="/driver/request" component={ requestDrive } />
             <Route exact path="/admin/dashboard" component={ adminDashboard } />
             <Route exact  component = { NoMatch } />
           </Switch>

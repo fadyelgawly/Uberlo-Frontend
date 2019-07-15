@@ -7,6 +7,11 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from 'react-router';
 import Paper from "@material-ui/core/Paper";
+import ReactTable from "react-table";
+import ReactDOM from 'react-dom';
+import StarRatingComponent from 'react-star-rating-component';
+import {  ListGroup, Form, Row, Col } from 'react-bootstrap';
+import "react-bootstrap/dist/react-bootstrap.min.js";
 
 const classes = makeStyles(theme => ({
   root: {
@@ -22,8 +27,9 @@ var isAvailable1;
 var currentArea1;
 var i = 0;
 var noOfRides = 0;
+var currentArea2;
 
-export class test2 extends Component {
+export class requestDrive extends Component {
   state = {
     request: {
       currentArea: null,
@@ -31,15 +37,21 @@ export class test2 extends Component {
       rideNo: null,
       requests: 0,
       toArea: null,
-      test: null
+      test: null,
+      rating: 1
     },
     statusSet: false,
     Accepted: false,
     tripStarted: false,
     isCanceled: false,
-    rideEnded:false
-
+    rideEnded: false,
+    Arrived: false,
+    users: {}
   };
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
   toggle = () => {
     const { show } = this.state;
     this.setState({
@@ -63,10 +75,7 @@ export class test2 extends Component {
       )
       .then(response => {
         console.log(response.data);
-        let users = response.data.users;
-        let isAvailable = response.data.users;
         this.setState({
-          users: users,
           request: {
             isAvailable: e,
             currentArea: currentArea1
@@ -80,7 +89,7 @@ export class test2 extends Component {
 
   onSelectArea = b => {
     const token = JSON.parse(localStorage.getItem("jwt"));
-
+    let currentArea1 = b;
     console.log(this.state.request.currentArea);
 
     axios
@@ -98,14 +107,28 @@ export class test2 extends Component {
       )
       .then(response => {
         console.log(response.data);
-        let rides = response.data.rides;
 
+        if (currentArea1 == "0") currentArea2 = "Masr El-Gedida";
         this.setState({
           rides: response.data.rides,
+          request: {
+            isAvailable: isAvailable1
+          }
+        });
 
+        if (currentArea1 == "1") currentArea2 = "Tagamoa";
+        this.setState({
+          rides: response.data.rides,
+          request: {
+            isAvailable: isAvailable1
+          }
+        });
+        if (currentArea1 == "2") currentArea2 = "Zamalek";
+        this.setState({
+          rides: response.data.rides,
           request: {
             isAvailable: isAvailable1,
-            currentArea: b
+            currentArea: "Zamalek"
           }
         });
         console.log(this.state);
@@ -121,7 +144,7 @@ export class test2 extends Component {
 
     if (
       this.state.request.currentArea != null &&
-      this.state.request.isAvailable === "1"
+      this.state.request.isAvailable == "1"
     ) {
       const token = JSON.parse(localStorage.getItem("jwt"));
 
@@ -137,7 +160,7 @@ export class test2 extends Component {
           noOfRides = response.data.rides.length;
           let toArea = response.data.rides[i].toArea;
           let rideNo = response.data.rides[i].rideNo;
-          if (toArea === "0") {
+          if (toArea == "0") {
             this.setState({
               request: {
                 toArea: "Masr El Gedida",
@@ -146,7 +169,7 @@ export class test2 extends Component {
                 currentArea: currentArea1
               }
             });
-          } else if (toArea === "1") {
+          } else if (toArea == "1") {
             this.setState({
               request: {
                 toArea: "Tagamoa",
@@ -155,7 +178,7 @@ export class test2 extends Component {
                 currentArea: currentArea1
               }
             });
-          } else if (toArea === "2") {
+          } else if (toArea == "2") {
             this.setState({
               request: {
                 toArea: "Zamalek",
@@ -230,7 +253,7 @@ export class test2 extends Component {
       });
   };
 
-  onEndRide = b => {
+  onEndRide = () => {
     const token = JSON.parse(localStorage.getItem("jwt"));
 
     console.log(this.state.request.rideNo);
@@ -254,8 +277,33 @@ export class test2 extends Component {
       .catch(function(error) {
         console.log(error);
       });
-  };
+    axios
+      .post(
+        "http://uberlo.herokuapp.com/ridesummary",
 
+        {
+          rideNo: this.state.request.rideNo
+        },
+        {
+          headers: {
+            Authorization: "JWT " + token
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
+        let test1 = response.data;
+        console.log(test1);
+        if (this._isMounted) {
+          this.setState({
+            users: response.data.ride
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
 
   onCancelRide = b => {
     console.log(this.state.tripStarted);
@@ -264,7 +312,8 @@ export class test2 extends Component {
     console.log(this.state.request.rideNo);
 
     axios
-      .patch("http://uberlo.herokuapp.com/driver/cancel",
+      .patch(
+        "http://uberlo.herokuapp.com/driver/cancel",
 
         {
           rideNo: this.state.request.rideNo
@@ -290,11 +339,47 @@ export class test2 extends Component {
     console.log(this.state.request.rideNo);
 
     axios
-      .patch("http://uberlo.herokuapp.com/driver/arrive",
+      .patch(
+        "http://uberlo.herokuapp.com/driver/arrive",
 
         {
           rideNo: this.state.request.rideNo
         },
+        {
+          headers: {
+            Authorization: "JWT " + token
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data.users);
+        let users = response.data.users;
+        this.setState({});
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+  onStarClick(nextValue, prevValue, name) {
+    this.setState({rating: nextValue});
+  }
+  onSubmitRating() {
+    
+    console.log(this.state.rating);
+    console.log(this.state.tripStarted);
+    const token = JSON.parse(localStorage.getItem("jwt"));
+
+    console.log(this.state.request.rideNo);
+
+    axios
+      .patch(
+        "http://uberlo.herokuapp.com/driver/rate",
+
+        {
+          rideNo: this.state.request.rideNo,
+          rate: this.state.rating
+        },
+
         {
           headers: {
             Authorization: "JWT " + token
@@ -307,20 +392,113 @@ export class test2 extends Component {
       .catch(function(error) {
         console.log(error);
       });
-  };
 
+    ///driver/rate
+  }
 
   render() {
- //   if (this.state.rideEnded)
-   // {
-///return(
-    //  <Redirect to = "/test2"/>
-            //);
-   // }
-    if ((!this.state.Accepted) || (this.state.rideEnded)) {
+    const test = [
+      {
+        Header: "Fare",
+        accessor: "fare",
+        sortable: true
+      },
+      {
+        Header: "from Area",
+        accessor: "fromArea",
+        sortable: true
+      },
+      {
+        Header: "To Area",
+        accessor: "toArea"
+      }
+    ];
+
+    const { rating } = this.state;
+    if (this.state.isCanceled) {
+      return <Redirect to="/" />;
+    }
+
+    if (this.state.rideEnded) {
+      return (
+        <React-Fragment>
+          <ListGroup>
+            <ListGroup.Item>
+              <Row>
+                <Form.Label column sm="4">
+                  Pick-up Location
+                </Form.Label>
+                <Col>
+                  <Form.Control
+                    plaintext
+                    readOnly
+                    defaultValue={currentArea2}
+                  />
+                </Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Form.Label column sm="4">
+                  Drop-off Location
+                </Form.Label>
+                <Col>
+                  <Form.Control
+                    plaintext
+                    readOnly
+                    defaultValue={this.state.request.toArea}
+                  />
+                </Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Form.Label column sm="4">
+                  Fare
+                </Form.Label>
+                <Col>
+                  <Form.Control
+                    plaintext
+                    readOnly
+                    defaultValue={this.state.users.Fare}
+                  />
+                </Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <h2>Please rate your Rider: {rating}</h2>
+                <StarRatingComponent
+                  name="rate1"
+                  starCount={5}
+                  value={rating}
+                  onStarClick={this.onStarClick.bind(this)}
+                />
+                <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                this.setState({
+                  Accepted: true
+                });
+                this.onSubmitRating();
+              }}
+            >
+             Submit Rating
+            </Button>&nbsp;
+              </Row>
+            </ListGroup.Item>
+          </ListGroup>
+        </React-Fragment>
+      );
+    }
+
+    if (!this.state.Accepted || this.state.rideEnded) {
       return (
         <Container>
-          <h2> Hello ya Swa2 {this.state.request.isAvailable} </h2> &nbsp;
+          <h2> Hello ya Swa2 </h2> &nbsp;
           <Dropdown
             onSelect={e => {
               isAvailable1 = e;
@@ -334,8 +512,7 @@ export class test2 extends Component {
               <Dropdown.Item eventKey="0">Not Available</Dropdown.Item>
               <Dropdown.Item eventKey="1">Available</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>{" "}
-          &nbsp;
+          </Dropdown>&nbsp;
           <Dropdown
             onSelect={b => {
               currentArea1 = b;
@@ -350,8 +527,7 @@ export class test2 extends Component {
               <Dropdown.Item eventKey="1">Tagamoa</Dropdown.Item>
               <Dropdown.Item eventKey="2">Zamalek</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>{" "}
-          &nbsp;
+          </Dropdown>&nbsp;
           <Button
             type="submit"
             fullWidth
@@ -384,8 +560,8 @@ export class test2 extends Component {
                 this.onSubmitAccept();
               }}
             >
-              Accept &nbsp;
-            </Button>{" "}
+              Accept 
+            </Button>&nbsp;
             <Button
               type="submit"
               fullWidth
@@ -402,58 +578,84 @@ export class test2 extends Component {
           </Grid>
         </Container>
       );
-    } else if (!this.state.tripStarted) {
+    } else if (!this.state.tripStarted && !this.state.Arrived) {
       return (
         <React-Fragment>
           <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            this.setState({
-              Accepted: true,
-              tripStarted: true
-            });
-            this.onArrived();
-          }}
-        >
-          Arrived
-        </Button> &nbsp;
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              this.setState({
+                Accepted: true,
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            this.setState({
-              Accepted: true,
-              tripStarted: true
-            });
-            this.onStartRide();
-          }}
-        >
-          Start Trip
-        </Button> &nbsp;
+                Arrived: true
+              });
+              this.onArrived();
+            }}
+          >
+            Arrived
+          </Button>{" "}&nbsp;
+          
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              this.setState({
+                Accepted: true,
 
-        <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          this.setState({
-            Accepted: true,
-            tripStarted: true,
-            isCanceled:true
-          });
-          this.onCancelRide();
-        }}
-      >
-        Cancel
-      </Button>
-      </React-Fragment>
+                isCanceled: true
+              });
+              this.onCancelRide();
+            }}
+          >
+            Cancel
+          </Button>
+        </React-Fragment>
+      );
+    } else if (
+      this.state.Accepted &&
+      this.state.Arrived &&
+      !this.state.tripStarted
+    ) {
+      return (
+        <React-Fragment>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              this.setState({
+                Accepted: true,
+                tripStarted: true
+              });
+              this.onStartRide();
+            }}
+          >
+            Start Trip
+          </Button>&nbsp;
+         
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              this.setState({
+                Accepted: true,
+
+                isCanceled: true
+              });
+              this.onCancelRide();
+            }}
+          >
+            Cancel
+          </Button>
+        </React-Fragment>
       );
     } else if (this.state.tripStarted && !this.state.isCanceled) {
       return (
@@ -466,17 +668,14 @@ export class test2 extends Component {
             this.setState({
               Accepted: true,
               tripStarted: true,
-              rideEnded:true
-
+              rideEnded: true
             });
             this.onEndRide();
-          
           }}
         >
           End Trip
         </Button>
       );
     }
-  
   }
 }
