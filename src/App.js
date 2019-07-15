@@ -43,11 +43,8 @@ function App() {
             <Route exact path="/rider/request" component={ RequestRide} />
             <Route exact path="/driver/history" component={ ridesHistoryDriver } />
             <Route exact path="/forgot" component={ forgotPassword } />
-<<<<<<< HEAD
             <Route exact path="/changePassword" component={ changePassword } />
             <Route exact path="/rider/dashboard" component={ accountInfo } />
-=======
->>>>>>> 2faf2602eb59548315c0e2467cbe5234e7de91bf
             <Route exact path="/end" component={ endRide } />
             <Route exact path="/driverWait" component={ driverWait } />
             <Route exact path="/login" component={ Login } />

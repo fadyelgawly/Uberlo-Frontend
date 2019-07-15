@@ -393,27 +393,11 @@ export class requestDrive extends Component {
         console.log(error);
       });
 
-    ///driver/rate
+   
   }
 
   render() {
-    // const test = [
-    //   {
-    //     Header: "Fare",
-    //     accessor: "fare",
-    //     sortable: true
-    //   },
-    //   {
-    //     Header: "from Area",
-    //     accessor: "fromArea",
-    //     sortable: true
-    //   },
-    //   {
-    //     Header: "To Area",
-    //     accessor: "toArea"
-    //   }
-    // ];
-
+   
     const { rating } = this.state;
     if (this.state.isCanceled) {
       return <Redirect to="/" />;

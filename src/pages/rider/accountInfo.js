@@ -57,7 +57,7 @@ export class accountInfo extends Component {
                 Authorization: `JWT ${this.state.token}`
             }
         }).then((res) => {
-            localStorage.setItem('user', JSON.stringify(res.data.user));
+            //localStorage.setItem('user', JSON.stringify(res.data.user));
         });
         return (<Redirect to="/rider/dashboard" />);
     }
