@@ -26,21 +26,13 @@ export class forgotPassword extends Component{
 
     onSubmit = () => {
 
-        let self = this
-        console.log(this.state.username)
-        console.log('Submitting Changes');
-        const token = JSON.parse(localStorage.getItem("jwt"));
+        let self = this;
         axios.post(global.baseURL + '/user/forgot/code', {
             username:this.state.username
             
         })
         .then(function (response) {
-            console.log(response);
             
-            localStorage.clear();
-            localStorage.setItem('jwt', JSON.stringify(response.data.token));
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-
             self.setState({ 
                 loggedin : true 
            });

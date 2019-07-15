@@ -17,6 +17,7 @@ const Styles = styled.div`
     }
 `;
 
+
 const user = JSON.parse(localStorage.getItem("user"));
 
 export const NavigationBar = () => (
