@@ -100,7 +100,7 @@ export default function LoginForm(props) {
                 className={classes.submit}
                 onClick={(e) => { 
                     e.preventDefault();
-                    props.onSubmit(); 
+                    props.onSubmitForgot(); 
                 }
             }>
                 Forgot Password

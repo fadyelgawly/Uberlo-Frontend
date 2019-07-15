@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Home } from './Home';
 import { acceptRides } from './pages/driver/acceptRides';
+import { changePassword } from './pages/userauth/changePassword';
 import { endRide } from './endRide';
 import { inRide } from './inRide';
 import { RequestRide } from './RequestRide';
@@ -42,6 +43,7 @@ function App() {
             <Route exact path="/rider/request" component={ RequestRide} />
             <Route exact path="/driver/history" component={ ridesHistoryDriver } />
             <Route exact path="/forgot" component={ forgotPassword } />
+            <Route exact path="/changePassword" component={ changePassword } />
             <Route exact path="/rider/dashboard" component={ accountInfo } />
             <Route exact path="/end" component={ endRide } />
             <Route exact path="/driverWait" component={ driverWait } />
