@@ -10,11 +10,14 @@ export class UsersList extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = { users: [] };
+    this.state = { 
+      users: [],
+      editSubmited: false
+    };
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
 
     const token = JSON.parse(localStorage.getItem("jwt"));
 
@@ -35,25 +38,39 @@ export class UsersList extends React.Component {
       });
   }
 
-  // editSubmited() {
-  //   const token = JSON.parse(localStorage.getItem("jwt"));
+  // componentDidUpdate() {
+  //   if(this.state.editSubmited === true){
+  //     const token = JSON.parse(localStorage.getItem("jwt"));
 
-  //   axios.get(global.baseURL + '/admin/users', {
-  //     headers: {
-  //       Authorization: 'JWT ' + token
-  //     }
-  //   })
-  //     .then((response) => {
-  //       console.log(response.data.users);
-  //       let users = response.data.users;
-  //       this.setState({
-  //         users
-  //       });
+  //     axios.get(global.baseURL + '/admin/users', {
+  //       headers: {
+  //         Authorization: 'JWT ' + token
+  //       }
   //     })
-  //     .catch(function (error) {
-  //       console.log(error);
+  //       .then((response) => {
+  //         console.log(response.data.users);
+  //         let users = response.data.users;
+  //         this.setState({
+  //           users
+  //         });
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+      
+  //     this.setState({
+  //       editSubmited: false
   //     });
+  //   }
   // }
+
+  submitUpdate = () => {
+    // this.forceUpdate();
+    // this.setState({
+    //   editSubmited: true
+    // });
+    // console.log(this.state.editSubmited);
+  }
 
   render() {
     return(
@@ -76,7 +93,7 @@ export class UsersList extends React.Component {
               <UserItem 
                 key = {user.id}
                 user = {user}
-                //editSubmited = {this.editSubmited()}
+                submitUpdate = {this.submitUpdate}
               />
             ))
           }</tbody>

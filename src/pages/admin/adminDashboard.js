@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ControlledTabs } from '../../components/ControlledTabs';
+import { AdminTabs } from './AdminTabs';
 
 export class adminDashboard extends Component {
 
     render() {
         return (
             <React.Fragment>
-                <ControlledTabs/>
+                <AdminTabs/>
             </React.Fragment>
         );
     }

@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-//import { Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import Paper from "@material-ui/core/Paper";
 // import ReactTable from "react-table";
 // import ReactDOM from 'react-dom';
@@ -107,10 +107,6 @@ export class requestDrive extends Component {
       )
       .then(response => {
         console.log(response.data);
-<<<<<<< HEAD:src/pages/driver/test2.js
-    //    let rides = response.data.rides;
-=======
->>>>>>> 2117530930dfba80c8a5ca69337fb37a21b84d73:src/pages/driver/requestDrive.js
 
         if (currentArea1 === "0") currentArea2 = "Masr El-Gedida";
         this.setState({

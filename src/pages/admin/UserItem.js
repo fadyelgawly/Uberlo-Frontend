@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FormControl, FormCheck, ButtonGroup, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 //import "react-bootstrap/dist/react-boot";
 
 export class UserItem extends Component {
@@ -30,7 +31,7 @@ export class UserItem extends Component {
 	
 	handleCheck = (e) => {
 		this.setState({
-			[e.target.name]: e.target.checked
+			[e.target.name]: e.target.isChecked == true
 		});
 	}
 
@@ -70,7 +71,7 @@ export class UserItem extends Component {
 		if(this.state.phone) m_user.phone = this.state.phone;
 		if(this.state.isDriver) m_user.isDriver = this.state.isDriver;
 		if(this.state.isAdmin) m_user.isAdmin = this.state.isAdmin;
-
+		console.log(m_user);
 		const token = JSON.parse(localStorage.getItem("jwt"));
 		console.log(token);
         axios.patch(global.baseURL + '/admin/user', m_user,{
@@ -80,8 +81,8 @@ export class UserItem extends Component {
 		});
 		
 		//TODO
-		//this.resetEdit();
-		//updateSubmit;
+		this.resetEdit();
+		this.props.submitUpdate.bind(this);
     }
 
 	render() {
@@ -146,3 +147,9 @@ export class UserItem extends Component {
 }
 
 export default UserItem
+
+//PropTypes
+UserItem.propTypes = {
+	user: PropTypes.object.isRequired,
+	updateSubmit: PropTypes.func.isRequired
+}

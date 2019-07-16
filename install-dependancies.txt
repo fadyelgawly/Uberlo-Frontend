@@ -1,1 +1,1 @@
-npm i  @material-ui/core @material-ui/icons axios bootstrap mdbreact react react-alert react-alert-template-basic react-bootstrap react-dom react-router-dom react-scripts react-star-rating-component react-table reactstrap styled-components react-notifications
+npm i  @material-ui/core @material-ui/icons axios bootstrap mdbreact react react-alert react-alert-template-basic react-bootstrap react-dom react-router-dom react-scripts react-star-rating-component react-table reactstrap styled-components react-notifications prop-types

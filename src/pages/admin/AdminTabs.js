@@ -1,9 +1,9 @@
 import React  from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { UsersList } from '../pages/admin/UsersList';
-import { RidesList } from '../pages/admin/RidesList';
+import { UsersList } from './UsersList';
+import { TripsList } from './TripsList';
 
-export class ControlledTabs extends React.Component {
+export class AdminTabs extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -25,9 +25,9 @@ export class ControlledTabs extends React.Component {
           </React.Fragment>
 
         </Tab>
-        <Tab eventKey="rideslist" title="Rides">
+        <Tab eventKey="tripslist" title="Trips">
         <React.Fragment>
-            <RidesList />
+            <TripsList />
           </React.Fragment>
           </Tab>
       </Tabs>
