@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 import Container from '@material-ui/core/Container';
 import "react-table/react-table.css"
 import axios from 'axios';
-import '../global'
+import '../../global'
 
 
 

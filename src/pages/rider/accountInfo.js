@@ -41,6 +41,12 @@ export class accountInfo extends Component {
         }));
     }
 
+    changePassClick () {
+      return( <Redirect to="/changePassword"/>);
+  }
+
+      
+
     submitClick () {
         var m_user = this.state.user;
         if(this.state.firstname) m_user.firstname = this.state.firstname;
@@ -51,7 +57,7 @@ export class accountInfo extends Component {
                 Authorization: `JWT ${this.state.token}`
             }
         }).then((res) => {
-           // localStorage.setItem('user', JSON.stringify(res.data.user));
+            //localStorage.setItem('user', JSON.stringify(res.data.user));
         });
         return (<Redirect to="/rider/dashboard" />);
     }
@@ -81,7 +87,8 @@ export class accountInfo extends Component {
                                 <Col><Form.Control plaintext readOnly defaultValue={this.state.user.phone} /></Col>
                             </Row></ListGroup.Item>
                             <ListGroup.Item><Row>
-                                <Col><Button onClick={()=>{this.editClick()}}>Edit</Button></Col> 
+                                <Col><Button onClick={()=>{this.editClick()}}>Edit</Button></Col>
+                                <Col><Button href="/changePassword" >Change Password</Button></Col> 
                             </Row></ListGroup.Item>
                         </ListGroup>
                     </React.Fragment>

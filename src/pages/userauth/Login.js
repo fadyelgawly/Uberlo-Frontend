@@ -9,7 +9,8 @@ import '../../global';
 export class Login extends Component{
 
     state = { 
-        loggedin: null
+        loggedin: null,
+        forgot:false
     };
 
     componentWillMount = () => {
@@ -36,7 +37,7 @@ export class Login extends Component{
         });
     }
 
-    onSubmit = () => {
+    onSubmit= () => {
 
         let self = this
 
@@ -64,9 +65,17 @@ export class Login extends Component{
 
 
     };
+    onSubmitForgot = () => {
+
+
+this.setState ({forgot:true})
+
+    };
 
 
     render(){
+        if(this.state.forgot)
+        {return(<Redirect to ="/forgot"/>)}
         if (this.state.loggedin){
             return(
                 <Redirect to = "/rider/dashboard"/>
@@ -77,6 +86,7 @@ export class Login extends Component{
                 <LoginForm 
                 handleInputChange={this.handleInputChange}
                 onSubmit = { this.onSubmit}
+                onSubmitForgot={this.onSubmitForgot}
                  />
                 <p>
                 {JSON.stringify(this.state.fields, null, 2)}

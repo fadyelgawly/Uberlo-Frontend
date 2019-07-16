@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Home } from './Home';
 import { acceptRides } from './pages/driver/acceptRides';
+import { changePassword } from './pages/userauth/changePassword';
 import { endRide } from './endRide';
 import { inRide } from './inRide';
 import { RequestRide } from './RequestRide';
@@ -20,7 +21,7 @@ import { NavigationBar } from './components/NavigationBar';
 import { Jumbotron } from './components/Jumbotron';
 import { Signup } from './pages/userauth/Signup';
 import { adminDashboard } from './pages/admin/adminDashboard';
-import { test2 } from './pages/driver/test2';
+import { requestDrive } from './pages/driver/requestDrive';
 
 
 function App() {
@@ -42,12 +43,14 @@ function App() {
             <Route exact path="/rider/request" component={ RequestRide} />
             <Route exact path="/driver/history" component={ ridesHistoryDriver } />
             <Route exact path="/forgot" component={ forgotPassword } />
+            <Route exact path="/changePassword" component={ changePassword } />
             <Route exact path="/rider/dashboard" component={ accountInfo } />
             <Route exact path="/end" component={ endRide } />
             <Route exact path="/driverWait" component={ driverWait } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/signup" component={ Signup } />
-            <Route exact path="/test2" component={ test2 } />
+            <Route exact path="/rider/dashboard" component={ accountInfo } />
+            <Route exact path="/driver/dashboard" component={ requestDrive } />
             <Route exact path="/admin/dashboard" component={ adminDashboard } />
             <Route exact  component = { NoMatch } />
           </Switch>
