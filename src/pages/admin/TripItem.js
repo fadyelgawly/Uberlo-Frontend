@@ -23,8 +23,10 @@ export class TripItem extends Component {
 					<td>{this.state.trip.pickupTime}</td>
 					<td>{this.state.trip.dropoffTime}</td>
 					<td>{this.state.trip.rider}</td>
+					<td>{this.state.trip.ridername}</td>
 					<td>{this.state.trip.riderRate}</td>
 					<td>{this.state.trip.driver}</td>
+					<td>{this.state.trip.drivername}</td>
 					<td>{this.state.trip.driverRate}</td>
 				</tr>
 			</React.Fragment>

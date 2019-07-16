@@ -52,9 +52,11 @@ export class TripsList extends Component {
                             <th>Request Time</th>
                             <th>Pickup Time</th>
                             <th>Dropoff Time</th>
-                            <th>Rider</th>
+                            <th>Rider ID</th>
+                            <th>Rider Name</th>
                             <th>Rider Rating</th>
-                            <th>Driver</th>
+                            <th>Driver ID</th>
+                            <th>Driver Name</th>
                             <th>Driver Rating</th>
                         </tr>
                     </thead>
