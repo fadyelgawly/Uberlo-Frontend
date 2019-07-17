@@ -22,6 +22,8 @@ import { Jumbotron } from './components/Jumbotron';
 import { Signup } from './pages/userauth/Signup';
 import { adminDashboard } from './pages/admin/adminDashboard';
 import { requestDrive } from './pages/driver/requestDrive';
+import RidesHist from './pages/rider/RidesHist';
+import DrivesHist from './pages/driver/DrivesHist';
 
 
 function App() {
@@ -37,11 +39,11 @@ function App() {
             <Route exact path="/" component={ Home } />
             <Route exact path="/inDrive" component={ inDrive } />
             <Route exact path="/acceptRides" component={ acceptRides } />
-            <Route exact path="/rider/history" component={ ridesHistory } />
+            <Route exact path="/rider/history" component={ RidesHist } />
             <Route exact path="/inRide" component={ inRide } />
             <Route exact path="/wait" component={ acceptWait } />
             <Route exact path="/rider/request" component={ RequestRide} />
-            <Route exact path="/driver/history" component={ ridesHistoryDriver } />
+            <Route exact path="/driver/history" component={ DrivesHist } />
             <Route exact path="/forgot" component={ forgotPassword } />
             <Route exact path="/changePassword" component={ changePassword } />
             <Route exact path="/rider/dashboard" component={ accountInfo } />
