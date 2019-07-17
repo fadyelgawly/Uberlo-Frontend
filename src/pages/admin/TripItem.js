@@ -19,9 +19,6 @@ export class TripItem extends Component {
 					<td>{this.state.trip.rideStatus}</td>
 					<td>{this.state.trip.fare}</td>
 					<td>{this.state.trip.promo}</td>
-					<td>{this.state.trip.requestTime}</td>
-					<td>{this.state.trip.pickupTime}</td>
-					<td>{this.state.trip.dropoffTime}</td>
 					<td>{this.state.trip.rider}</td>
 					<td>{this.state.trip.ridername}</td>
 					<td>{this.state.trip.riderRate}</td>

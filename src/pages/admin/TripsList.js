@@ -49,9 +49,6 @@ export class TripsList extends Component {
                             <th>Status</th>
                             <th>Fare</th>
                             <th>Promo</th>
-                            <th>Request Time</th>
-                            <th>Pickup Time</th>
-                            <th>Dropoff Time</th>
                             <th>Rider ID</th>
                             <th>Rider Name</th>
                             <th>Rider Rating</th>

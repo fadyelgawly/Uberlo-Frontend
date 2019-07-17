@@ -2,6 +2,7 @@ import React  from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { UsersList } from './UsersList';
 import { TripsList } from './TripsList';
+import { PromoList } from './PromoList';
 
 export class AdminTabs extends React.Component {
 
@@ -28,6 +29,11 @@ export class AdminTabs extends React.Component {
         <Tab eventKey="tripslist" title="Trips">
         <React.Fragment>
             <TripsList />
+          </React.Fragment>
+          </Tab>
+          <Tab eventKey="promoslist" title="Promos">
+        <React.Fragment>
+            <PromoList />
           </React.Fragment>
           </Tab>
       </Tabs>

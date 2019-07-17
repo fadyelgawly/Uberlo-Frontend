@@ -1,1 +1,1 @@
-global.baseURL = 'https://uberlo.herokuapp.com'
+global.baseURL =  'https://uberlo.herokuapp.com'
