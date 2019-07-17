@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
+import axios from 'axios';
 import '../../global';
 import { Button, ListGroup, Form, Row, Col } from 'react-bootstrap';
 import "react-bootstrap/dist/react-bootstrap.min.js";
-import axios from 'axios';
+
 
 
 export class accountInfo extends Component {

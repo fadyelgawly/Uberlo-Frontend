@@ -6,7 +6,7 @@ import { acceptRides } from './pages/driver/acceptRides';
 import { changePassword } from './pages/userauth/changePassword';
 import { endRide } from './endRide';
 import { inRide } from './inRide';
-import { RequestRide } from './RequestRide';
+import { RideRequest } from './pages/rider/RideRequest';
 import { forgotPassword } from './pages/userauth/forgotPassword';
 import { inDrive} from './inDrive';
 import { acceptWait } from './acceptWait';
@@ -40,7 +40,7 @@ function App() {
             <Route exact path="/rider/history" component={ RidesHist } />
             <Route exact path="/inRide" component={ inRide } />
             <Route exact path="/wait" component={ acceptWait } />
-            <Route exact path="/rider/request" component={ RequestRide} />
+            <Route exact path="/rider/request" component={ RideRequest } />
             <Route exact path="/driver/history" component={ DrivesHist } />
             <Route exact path="/forgot" component={ forgotPassword } />
             <Route exact path="/changePassword" component={ changePassword } />
